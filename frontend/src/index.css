@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  @apply bg-canvas text-ink font-body antialiased;
+}
+
+/* Tabular numeric data — measurement readings should line up in a monospace grid */
+.data-num {
+  @apply font-mono tabular-nums;
+}
+
+.btn {
+  @apply inline-flex items-center justify-center gap-2 rounded px-4 py-2 text-sm font-medium
+         transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+}
+.btn-primary {
+  @apply btn bg-ink text-white hover:bg-[#0d1830];
+}
+.btn-brass {
+  @apply btn bg-brass text-white hover:bg-[#a2761f];
+}
+.btn-outline {
+  @apply btn border border-line bg-white text-ink hover:border-ink;
+}
+.btn-danger {
+  @apply btn bg-fail text-white hover:bg-[#96302b];
+}
+
+.field-label {
+  @apply mb-1 block text-xs font-semibold uppercase tracking-wide text-steel;
+}
+.input {
+  @apply w-full rounded border border-line bg-white px-3 py-2 text-sm text-ink
+         placeholder:text-mist focus:border-ink focus:outline-none focus:ring-1 focus:ring-ink;
+}
+.select {
+  @apply input appearance-none;
+}
+
+.panel {
+  @apply rounded border border-line bg-white;
+}
+.panel-header {
+  @apply flex items-center justify-between border-b border-line px-5 py-4;
+}
+
+.badge {
+  @apply inline-flex items-center rounded-sm px-2 py-0.5 text-xs font-semibold;
+}
+.badge-pass {
+  @apply badge bg-passBg text-pass;
+}
+.badge-fail {
+  @apply badge bg-failBg text-fail;
+}
+.badge-neutral {
+  @apply badge bg-canvas text-steel border border-line;
+}
+
+table.data-table {
+  @apply w-full border-collapse text-sm;
+}
+table.data-table th {
+  @apply border-b border-line bg-canvas px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-steel;
+}
+table.data-table td {
+  @apply border-b border-line px-3 py-2 text-ink;
+}
+table.data-table tr:hover td {
+  @apply bg-canvas/60;
+}
