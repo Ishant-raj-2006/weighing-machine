@@ -9,9 +9,9 @@ from . import models, auth
 
 DEMO_USERS = [
     {"username": "admin", "password": "Admin!Secured@2026", "full_name": "System Administrator", "role": "admin"},
-    {"username": "labmanager", "password": "LabManager#Pass99", "full_name": "Priya Sharma", "role": "lab_manager"},
-    {"username": "tester", "password": "Tester$Token77", "full_name": "Rohit Verma", "role": "testing_officer"},
-    {"username": "reviewer", "password": "Reviewer^Key88", "full_name": "Anjali Nair", "role": "reviewer"},
+    {"username": "labmanager", "password": "LabManager#Pass99", "full_name": "Aushaka ", "role": "lab_manager"},
+    {"username": "tester", "password": "Tester$Token77", "full_name": "Archana ", "role": "testing_officer"},
+    {"username": "reviewer", "password": "Reviewer^Key88", "full_name": "Kajal & Tanya", "role": "reviewer"},
 ]
 
 
