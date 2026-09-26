@@ -92,3 +92,45 @@ def upload_photo(
     db.commit()
     db.refresh(inst)
     return inst
+
+@router.put("/{instrument_id}", response_model=schemas.InstrumentOut)
+def update_instrument(
+    instrument_id: int,
+    payload: schemas.InstrumentCreate,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(auth.require_role("admin", "lab_manager", "testing_officer")),
+):
+    inst = db.get(models.Instrument, instrument_id)
+    if not inst:
+        raise HTTPException(status_code=404, detail="Instrument not found")
+    
+    if payload.accuracy_class.upper() not in VALID_CLASSES:
+        raise HTTPException(status_code=400, detail=f"accuracy_class must be one of {VALID_CLASSES}")
+    if payload.max_capacity <= payload.min_capacity:
+        raise HTTPException(status_code=400, detail="max_capacity must be greater than min_capacity")
+    if payload.e_value <= 0:
+        raise HTTPException(status_code=400, detail="e_value must be positive")
+    
+    existing = db.query(models.Instrument).filter(models.Instrument.serial_number == payload.serial_number).first()
+    if existing and existing.id != instrument_id:
+        raise HTTPException(status_code=400, detail="An instrument with this serial number already exists")
+
+    for key, value in payload.model_dump().items():
+        setattr(inst, key, value)
+    inst.accuracy_class = inst.accuracy_class.upper()
+    db.commit()
+    db.refresh(inst)
+    return inst
+
+@router.delete("/{instrument_id}")
+def delete_instrument(
+    instrument_id: int,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(auth.require_role("admin", "lab_manager")),
+):
+    inst = db.get(models.Instrument, instrument_id)
+    if not inst:
+        raise HTTPException(status_code=404, detail="Instrument not found")
+    db.delete(inst)
+    db.commit()
+    return {"detail": "Instrument deleted"}

@@ -253,3 +253,40 @@ def review_test(
     db.commit()
     db.refresh(report)
     return report
+
+@router.put("/{test_id}", response_model=schemas.TestReportOut)
+def update_test(
+    test_id: int,
+    payload: schemas.TestReportCreate,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(auth.require_role(*EDITOR_ROLES)),
+):
+    report = _get_report_or_404(db, test_id)
+    instrument = db.get(models.Instrument, payload.instrument_id)
+    if not instrument:
+        raise HTTPException(status_code=404, detail="Instrument not found")
+    if payload.test_stage not in r76_engine.VALID_STAGES:
+        raise HTTPException(status_code=400, detail=f"test_stage must be one of {r76_engine.VALID_STAGES}")
+
+    report.instrument_id = payload.instrument_id
+    report.lab_name = payload.lab_name
+    report.lab_temperature_c = payload.lab_temperature_c
+    report.lab_humidity_pct = payload.lab_humidity_pct
+    report.atmospheric_pressure_hpa = payload.atmospheric_pressure_hpa
+    report.test_stage = payload.test_stage
+    report.test_date = payload.test_date or report.test_date
+
+    db.commit()
+    db.refresh(report)
+    return report
+
+@router.delete("/{test_id}")
+def delete_test(
+    test_id: int,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(auth.require_role("admin", "lab_manager")),
+):
+    report = _get_report_or_404(db, test_id)
+    db.delete(report)
+    db.commit()
+    return {"detail": "Test report deleted"}

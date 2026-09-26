@@ -58,7 +58,7 @@ export default function Instruments() {
               <th>Max / Min</th>
               <th>e</th>
               <th>Class</th>
-              <th></th>
+              <th className="text-right">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -89,10 +89,25 @@ export default function Instruments() {
                 <td>
                   <span className="badge-neutral">Class {inst.accuracy_class}</span>
                 </td>
-                <td className="text-right">
+                <td className="text-right flex items-center justify-end gap-3">
                   <Link to={`/tests/new?instrument=${inst.id}`} className="text-sm font-medium text-brass hover:underline">
                     New Test
                   </Link>
+                  <button 
+                    onClick={async () => {
+                      if (window.confirm('Are you sure you want to delete this instrument?')) {
+                        try {
+                          await api.delete(`/instruments/${inst.id}`)
+                          setInstruments(instruments.filter(i => i.id !== inst.id))
+                        } catch(err) {
+                          alert('Failed to delete instrument.')
+                        }
+                      }
+                    }}
+                    className="text-sm font-medium text-fail hover:underline"
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}

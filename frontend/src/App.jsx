@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
 import ProtectedRoute from './components/ProtectedRoute'
 import Layout from './components/Layout'
+import { Toaster } from 'sonner'
 
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
@@ -16,6 +17,7 @@ import AdminPanel from './pages/AdminPanel'
 export default function App() {
   return (
     <AuthProvider>
+      <Toaster position="top-right" richColors theme="light" />
       <Routes>
         <Route path="/login" element={<Login />} />
 
