@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import api from '../api'
 import ResultBadge from '../components/ResultBadge'
-import { IconPlus, IconTrash, IconChevronRight } from '../components/icons'
+import { IconPlus, IconTrash, IconChevronRight, IconDownload } from '../components/icons'
 
 const TABS = [
   { key: 'weighing', label: '1. Accuracy (Weighing) Test' },
@@ -132,6 +132,19 @@ export default function TestObservations() {
     } catch (err) {
       setError(err?.response?.data?.detail || 'Could not finalize this test.')
     }
+  }
+
+  // Helper to download files (PDF/Word)
+  async function downloadFile(url, filename) {
+    const res = await api.get(url, { responseType: 'blob' })
+    const blobUrl = window.URL.createObjectURL(new Blob([res.data]))
+    const a = document.createElement('a')
+    a.href = blobUrl
+    a.download = filename
+    document.body.appendChild(a)
+    a.click()
+    a.remove()
+    window.URL.revokeObjectURL(blobUrl)
   }
 
   const unit = instrument.unit
@@ -285,6 +298,16 @@ export default function TestObservations() {
           Once all applicable tests are recorded, finalize to compute the overall PASS/FAIL result and lock the report.
         </p>
         <button onClick={handleFinalize} className="btn-brass">Finalize &amp; Calculate Result</button>
+        {test_report && test_report.status === 'completed' && (
+          <div className="flex gap-2">
+            <button onClick={() => downloadFile(`/reports/${id}/pdf`, `${test_report.report_number.replace(/\\//g, '-')}.pdf`)} className="btn-outline">
+              <IconDownload /> PDF
+            </button>
+            <button onClick={() => downloadFile(`/reports/${id}/docx`, `${test_report.report_number.replace(/\\//g, '-')}.docx`)} className="btn-outline">
+              <IconDownload /> Word
+            </button>
+          </div>
+        )}
       </div>
     </div>
   )

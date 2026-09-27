@@ -65,16 +65,12 @@ export default function ReportPreview() {
           {report.status !== 'completed' && (
             <Link to={`/tests/${id}/observations`} className="btn-outline">Continue Entry</Link>
           )}
-          {report.status === 'completed' && (
-            <>
-              <button onClick={() => downloadFile(`/reports/${id}/pdf`, `${fileBase}.pdf`)} className="btn-outline">
-                <IconDownload /> PDF
-              </button>
-              <button onClick={() => downloadFile(`/reports/${id}/docx`, `${fileBase}.docx`)} className="btn-outline">
-                <IconDownload /> Word
-              </button>
-            </>
-          )}
+          <button onClick={() => downloadFile(`/reports/${id}/pdf`, `${fileBase}.pdf`)} className="btn-outline">
+            <IconDownload /> PDF
+          </button>
+          <button onClick={() => downloadFile(`/reports/${id}/docx`, `${fileBase}.docx`)} className="btn-outline">
+            <IconDownload /> Word
+          </button>
         </div>
       </div>
 
