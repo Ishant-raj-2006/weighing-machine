@@ -1,4 +1,4 @@
-admin = admin123 , 
-labmanager = lab123 
-tester =test123 , 
-reviewer = review123 
+admin = Admin!Secured@2026
+labmanager = LabManager#Pass99
+tester = Tester$Token77
+reviewer = Reviewer^Key88

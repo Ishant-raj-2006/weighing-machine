@@ -3,12 +3,31 @@ import { useNavigate } from 'react-router-dom'
 import api from '../api'
 
 const ACCURACY_CLASSES = ['I', 'II', 'III', 'IIII']
-const INSTRUMENT_TYPES = [
-  'Electronic Weighing Scale', 'Electronic Platform Scale', 'Weighbridge', 'Counter Scale', 'Crane Scale',
+const INSTRUMENT_CATEGORIES = [
+  {
+    category: "Home & Health Care Scales",
+    types: ["Digital Body Scale", "Analog Spring Scale", "Smart Body Composition Scale", "Baby Weighing Scale", "Kitchen / Food Scale"]
+  },
+  {
+    category: "Commercial & Retail Scales",
+    types: ["Price Computing Scale", "Counter / Bench Scale", "Hanging / Luggage Scale", "POS Billing Scale"]
+  },
+  {
+    category: "Scientific & Precision Scales",
+    types: ["Analytical Balance", "Jewelry Scale", "Counting Scale"]
+  },
+  {
+    category: "Heavy Industrial & Logistics Scales",
+    types: ["Platform / Floor Scale", "Crane Scale", "Forklift Scale", "Conveyor Scale", "Tank & Silo Scale"]
+  },
+  {
+    category: "Transport & Heavy Vehicle Scales",
+    types: ["Weighbridge / Truck Scale", "Axle Scale"]
+  }
 ]
 
 const initial = {
-  manufacturer_name: '', manufacturer_address: '', model_name: '', instrument_type: INSTRUMENT_TYPES[0],
+  manufacturer_name: '', manufacturer_address: '', model_name: '', instrument_type: INSTRUMENT_CATEGORIES[0].types[0],
   serial_number: '', max_capacity: '', min_capacity: '', e_value: '', d_value: '', unit: 'kg', accuracy_class: 'III',
 }
 
@@ -86,7 +105,11 @@ export default function NewInstrument() {
             <label className="field-label">Instrument Type</label>
             <select className="select" value={form.instrument_type}
                     onChange={(e) => update('instrument_type', e.target.value)}>
-              {INSTRUMENT_TYPES.map((t) => <option key={t}>{t}</option>)}
+              {INSTRUMENT_CATEGORIES.map((group) => (
+                <optgroup key={group.category} label={group.category}>
+                  {group.types.map((t) => <option key={t} value={t}>{t}</option>)}
+                </optgroup>
+              ))}
             </select>
           </div>
           <div>

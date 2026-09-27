@@ -26,7 +26,7 @@ class Instrument(Base):
     manufacturer_name = Column(String(150), nullable=False)
     manufacturer_address = Column(String(255), nullable=True)
     model_name = Column(String(100), nullable=False)
-    instrument_type = Column(String(80), default="Electronic Weighing Scale")
+    instrument_type = Column(String(80), default="Digital Body Scale")
     serial_number = Column(String(100), unique=True, index=True, nullable=False)
 
     max_capacity = Column(Float, nullable=False)   # Max

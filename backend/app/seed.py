@@ -29,20 +29,36 @@ def run_seed(db: Session) -> None:
 
     if db.query(models.Instrument).count() == 0:
         admin = db.query(models.User).filter(models.User.username == "admin").first()
-        sample = models.Instrument(
-            manufacturer_name="Precision Weightech Pvt. Ltd.",
-            manufacturer_address="Plot 14, Industrial Area, Patna, Bihar",
-            model_name="PW-500E",
-            instrument_type="Electronic Platform Scale",
-            serial_number="PW500E-2026-0001",
-            max_capacity=500,
-            min_capacity=2,
-            e_value=0.1,
-            d_value=0.1,
-            unit="kg",
-            accuracy_class="III",
-            created_by=admin.id if admin else None,
-        )
-        db.add(sample)
+        
+        CATEGORIES = [
+          {"category": "Home & Health Care Scales", "types": ["Digital Body Scale", "Analog Spring Scale", "Smart Body Composition Scale", "Baby Weighing Scale", "Kitchen / Food Scale"]},
+          {"category": "Commercial & Retail Scales", "types": ["Price Computing Scale", "Counter / Bench Scale", "Hanging / Luggage Scale", "POS Billing Scale"]},
+          {"category": "Scientific & Precision Scales", "types": ["Analytical Balance", "Jewelry Scale", "Counting Scale"]},
+          {"category": "Heavy Industrial & Logistics Scales", "types": ["Platform / Floor Scale", "Crane Scale", "Forklift Scale", "Conveyor Scale", "Tank & Silo Scale"]},
+          {"category": "Transport & Heavy Vehicle Scales", "types": ["Weighbridge / Truck Scale", "Axle Scale"]}
+        ]
+        
+        count = 1
+        for group in CATEGORIES:
+            for t in group["types"]:
+                prefix = "".join([w[0].upper() for w in t.split() if w.isalpha()]) or "INST"
+                if len(prefix) < 2: prefix = t[:3].upper()
+                
+                inst = models.Instrument(
+                    manufacturer_name=group["category"],
+                    manufacturer_address="Sample Address",
+                    model_name=t,
+                    instrument_type=t,
+                    serial_number=f"{prefix}-2026-{count:04d}",
+                    max_capacity=100.0,
+                    min_capacity=1.0,
+                    e_value=0.1,
+                    d_value=0.1,
+                    unit="kg",
+                    accuracy_class="III",
+                    created_by=admin.id if admin else None,
+                )
+                db.add(inst)
+                count += 1
         db.commit()
-        print("[seed] Sample instrument created: PW500E-2026-0001")
+        print("[seed] Sample instruments created for all categories.")
