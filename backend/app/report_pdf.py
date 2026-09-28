@@ -4,7 +4,7 @@ from reportlab.lib import colors
 from reportlab.lib.units import mm
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import (
-    SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, HRFlowable
+    SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, HRFlowable, PageBreak
 )
 from reportlab.lib.enums import TA_CENTER, TA_LEFT
 
@@ -185,6 +185,15 @@ def build_pdf(context: dict) -> bytes:
         ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
     ]))
     story.append(banner)
+    # Certificate section based on overall result
+    story.append(PageBreak())
+    cert_title = "Certificate of Successful Test" if overall == "PASS" else "Certificate of Unsuccessful Test"
+    story.append(Paragraph(cert_title, ss["SectionHeading"]))
+    if overall == "FAIL":
+        reason = report.get("remarks") or "No specific remarks provided."
+        story.append(Paragraph(f"Reason for failure: {reason}", ss["CellText"]))
+    else:
+        story.append(Paragraph("All test criteria were met successfully.", ss["CellText"]))
 
     if report.get("remarks"):
         story.append(Paragraph("Remarks", ss["SectionHeading"]))

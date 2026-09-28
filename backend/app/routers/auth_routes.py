@@ -56,3 +56,19 @@ def create_user(
     db.commit()
     db.refresh(user)
     return user
+
+@router.delete("/{user_id}", response_model=dict)
+def delete_user(
+    user_id: int,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(auth.require_role("admin")),
+):
+    # Prevent admin from deleting themselves
+    if current_user.id == user_id:
+        raise HTTPException(status_code=400, detail="Admin cannot delete themselves")
+    user = db.get(models.User, user_id)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    db.delete(user)
+    db.commit()
+    return {"detail": "User deleted"}

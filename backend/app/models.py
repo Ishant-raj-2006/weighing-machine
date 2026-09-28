@@ -71,7 +71,7 @@ class TestReport(Base):
     reviewed_by = Column(Integer, ForeignKey("users.id"), nullable=True)
 
     # draft -> in_progress -> completed
-    status = Column(String(20), default="draft")
+    status = Column(String(20), default="in_progress")
     overall_result = Column(String(10), nullable=True)  # PASS / FAIL
     remarks = Column(Text, nullable=True)
 

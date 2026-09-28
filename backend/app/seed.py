@@ -8,10 +8,10 @@ from . import models, auth
 
 
 DEMO_USERS = [
-    {"username": "admin", "password": "Admin!Secured@2026", "full_name": "System Administrator", "role": "admin"},
-    {"username": "labmanager", "password": "LabManager#Pass99", "full_name": "Aushaka ", "role": "lab_manager"},
-    {"username": "tester", "password": "Tester$Token77", "full_name": "Archana ", "role": "testing_officer"},
-    {"username": "reviewer", "password": "Reviewer^Key88", "full_name": "Kajal & Tanya", "role": "reviewer"},
+    {"username": "admin", "password": "Admin123", "full_name": "Ishant ", "role": "admin"},
+    {"username": "labmanager", "password": "LabManager123", "full_name": " Archna kumari", "role": "lab_manager"},
+    {"username": "tester", "password": "Tester123", "full_name": "Aushaka ", "role": "testing_officer"},
+    {"username": "reviewer", "password": "Reviewer123", "full_name": "Kajal ", "role": "reviewer"},
 ]
 
 

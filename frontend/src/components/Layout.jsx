@@ -42,10 +42,9 @@ export default function Layout() {
               to={to}
               end={end}
               className={({ isActive }) =>
-                `flex items-center gap-3 rounded px-3 py-2 text-sm transition-colors border-l-2 ${
-                  isActive
-                    ? 'border-brass bg-white/10 text-white font-medium'
-                    : 'border-transparent text-white/70 hover:bg-white/5 hover:text-white'
+                `flex items-center gap-3 rounded px-3 py-2 text-sm transition-colors border-l-2 ${isActive
+                  ? 'border-brass bg-white/10 text-white font-medium'
+                  : 'border-transparent text-white/70 hover:bg-white/5 hover:text-white'
                 }`
               }
             >
@@ -58,10 +57,9 @@ export default function Layout() {
             <NavLink
               to="/admin"
               className={({ isActive }) =>
-                `flex items-center gap-3 rounded px-3 py-2 text-sm transition-colors border-l-2 ${
-                  isActive
-                    ? 'border-brass bg-white/10 text-white font-medium'
-                    : 'border-transparent text-white/70 hover:bg-white/5 hover:text-white'
+                `flex items-center gap-3 rounded px-3 py-2 text-sm transition-colors border-l-2 ${isActive
+                  ? 'border-brass bg-white/10 text-white font-medium'
+                  : 'border-transparent text-white/70 hover:bg-white/5 hover:text-white'
                 }`
               }
             >

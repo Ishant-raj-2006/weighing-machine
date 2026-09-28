@@ -290,3 +290,20 @@ def delete_test(
     db.delete(report)
     db.commit()
     return {"detail": "Test report deleted"}
+
+@router.patch("/{test_id}/status", response_model=schemas.TestReportOut)
+def update_test_status(
+    test_id: int,
+    payload: schemas.TestReportStatusUpdate,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(auth.require_role("testing_officer", "admin")),
+):
+    report = _get_report_or_404(db, test_id)
+    report.status = payload.status
+    if payload.overall_result is not None:
+        report.overall_result = payload.overall_result
+    if payload.remarks is not None:
+        report.remarks = payload.remarks
+    db.commit()
+    db.refresh(report)
+    return report

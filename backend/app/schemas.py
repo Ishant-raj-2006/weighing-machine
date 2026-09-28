@@ -76,6 +76,11 @@ class TestReportCreate(BaseModel):
     test_stage: str = "initial_verification"
     test_date: Optional[date] = None
 
+class TestReportStatusUpdate(BaseModel):
+    status: str
+    overall_result: Optional[str] = None
+    remarks: Optional[str] = None
+
 
 class TestReportOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
