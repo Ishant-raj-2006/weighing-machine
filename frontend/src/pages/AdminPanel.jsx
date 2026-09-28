@@ -17,6 +17,16 @@ export default function AdminPanel() {
     const res = await api.get('/auth/users')
     setUsers(res.data)
   }
+  // Delete a user by ID
+  async function deleteUser(userId) {
+    try {
+      await api.delete(`/auth/users/${userId}`)
+      // Refresh the user list
+      load()
+    } catch (err) {
+      console.error('Failed to delete user:', err)
+    }
+  }
   useEffect(() => { load() }, [])
 
   function update(field, value) {
@@ -47,17 +57,35 @@ export default function AdminPanel() {
       <div className="grid grid-cols-3 gap-6">
         <div className="panel col-span-2 overflow-x-auto">
           <table className="data-table">
-            <thead><tr><th>Full Name</th><th>Username</th><th>Role</th><th>Status</th></tr></thead>
-            <tbody>
-              {users.map((u) => (
-                <tr key={u.id}>
-                  <td>{u.full_name}</td>
-                  <td className="data-num">{u.username}</td>
-                  <td><span className="badge-neutral">{ROLE_LABELS[u.role] || u.role}</span></td>
-                  <td>{u.is_active ? <span className="badge-pass">Active</span> : <span className="badge-fail">Disabled</span>}</td>
-                </tr>
-              ))}
-            </tbody>
+<thead>
+  <tr>
+    <th>Full Name</th>
+    <th>Username</th>
+    <th>Role</th>
+    <th>Status</th>
+    <th>Actions</th>
+  </tr>
+</thead>
+<tbody>
+  {users.map((u) => (
+    <tr key={u.id}>
+      <td>{u.full_name}</td>
+      <td className="data-num">{u.username}</td>
+      <td><span className="badge-neutral">{ROLE_LABELS[u.role] || u.role}</span></td>
+      <td>{u.is_active ? <span className="badge-pass">Active</span> : <span className="badge-fail">Disabled</span>}</td>
+      <td>
+        <button
+          onClick={() => deleteUser(u.id)}
+          className="btn-outline !px-2 !py-1 text-xs"
+          title="Delete user"
+        >
+          Delete
+        </button>
+      </td>
+    </tr>
+  ))}
+</tbody>
+
           </table>
         </div>
 
