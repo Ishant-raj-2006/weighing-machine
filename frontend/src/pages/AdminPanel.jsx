@@ -20,8 +20,9 @@ export default function AdminPanel() {
   // Delete a user by ID
   async function deleteUser(userId) {
     try {
-      await api.delete(`/auth/users/${userId}`)
-      // Refresh the user list
+      // Correct endpoint: DELETE /api/auth/{user_id}
+      await api.delete(`/auth/${userId}`)
+      // Refresh the user list after deletion
       load()
     } catch (err) {
       console.error('Failed to delete user:', err)
