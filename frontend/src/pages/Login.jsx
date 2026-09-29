@@ -9,6 +9,7 @@ import { toast } from 'sonner'
 import { Eye, EyeOff, Scale, Loader2 } from 'lucide-react'
 
 const loginSchema = z.object({
+  role: z.string().min(1, 'Role is required'),
   username: z.string().min(1, 'Username is required'),
   password: z.string().min(1, 'Password is required'),
 })
@@ -25,17 +26,17 @@ export default function Login() {
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(loginSchema),
-    defaultValues: { username: '', password: '' }
+    defaultValues: { role: '', username: '', password: '' }
   })
 
   async function onSubmit(data) {
     try {
-      await login(data.username, data.password)
+      await login(data.username, data.password, data.role)
       toast.success('Successfully logged in!')
       const dest = location.state?.from?.pathname || '/'
       navigate(dest, { replace: true })
     } catch (err) {
-      toast.error(err?.response?.data?.detail || 'Login failed. Check your credentials.')
+      toast.error(err?.response?.data?.detail || err.message || 'Login failed. Check your credentials.')
     }
   }
 
@@ -105,6 +106,27 @@ export default function Login() {
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+            <div>
+              <label className="mb-1.5 block text-sm font-medium text-steel">Role</label>
+              <div className="relative">
+                <select
+                  {...register('role')}
+                  className={`w-full rounded-lg border bg-white px-4 py-3 text-ink transition-all focus:outline-none focus:ring-2 focus:ring-ink/20 ${errors.role ? 'border-fail focus:border-fail' : 'border-line focus:border-ink'}`}
+                >
+                  <option value="">Select your role</option>
+                  <option value="admin">Administrator</option>
+                  <option value="lab_manager">Lab Manager</option>
+                  <option value="testing_officer">Testing Officer</option>
+                  <option value="reviewer">Reviewer</option>
+                </select>
+              </div>
+              {errors.role && (
+                <motion.p initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} className="mt-1.5 text-sm font-medium text-fail">
+                  {errors.role.message}
+                </motion.p>
+              )}
+            </div>
+
             <div>
               <label className="mb-1.5 block text-sm font-medium text-steel">Username</label>
               <div className="relative">

@@ -9,7 +9,7 @@ export function AuthProvider({ children }) {
     return raw ? JSON.parse(raw) : null
   })
 
-  const login = useCallback(async (username, password) => {
+  const login = useCallback(async (username, password, selectedRole) => {
     const form = new URLSearchParams()
     form.append('username', username)
     form.append('password', password)
@@ -17,6 +17,11 @@ export function AuthProvider({ children }) {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     })
     const { access_token, role, full_name } = res.data
+    
+    if (selectedRole && role !== selectedRole) {
+      throw new Error('User does not have the selected role.')
+    }
+
     localStorage.setItem('nawi_token', access_token)
     const userObj = { username, role, full_name }
     localStorage.setItem('nawi_user', JSON.stringify(userObj))
