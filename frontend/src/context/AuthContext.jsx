@@ -17,7 +17,7 @@ export function AuthProvider({ children }) {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     })
     const { access_token, role, full_name } = res.data
-    
+
     if (selectedRole && role !== selectedRole) {
       throw new Error('User does not have the selected role.')
     }
