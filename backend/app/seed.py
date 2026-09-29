@@ -8,8 +8,7 @@ from . import models, auth
 
 
 DEMO_USERS = [
-    {"username": "admin", "password": "Admin123", "full_name": "Ishant ", "role": "admin"},
-    {"username": "labmanager", "password": "LabManager123", "full_name": " Archna kumari", "role": "lab_manager"},
+    {"username": "Sudhanshu_Kumar", "password": "Sudhanshu_Kumar123", "full_name": "Sudhanshu Kumar", "role": "admin"},
     {"username": "tester", "password": "Tester123", "full_name": "Aushaka ", "role": "testing_officer"},
     {"username": "reviewer", "password": "Reviewer123", "full_name": "Kajal ", "role": "reviewer"},
 ]
@@ -28,7 +27,7 @@ def run_seed(db: Session) -> None:
         print("[seed] Demo users created:", ", ".join(f'{u["username"]}/{u["password"]}' for u in DEMO_USERS))
 
     if db.query(models.Instrument).count() == 0:
-        admin = db.query(models.User).filter(models.User.username == "admin").first()
+        admin = db.query(models.User).filter(models.User.username == "Sudhanshu_Kumar").first()
         
         CATEGORIES = [
           {"category": "Home & Health Care Scales", "types": ["Digital Body Scale", "Analog Spring Scale", "Smart Body Composition Scale", "Baby Weighing Scale", "Kitchen / Food Scale"]},
