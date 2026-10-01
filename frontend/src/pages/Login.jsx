@@ -20,7 +20,7 @@ export default function Login() {
   const navigate = useNavigate()
   const location = useLocation()
   const [showPassword, setShowPassword] = useState(false)
-  
+
   const {
     register,
     handleSubmit,
@@ -82,7 +82,7 @@ export default function Login() {
         </div>
 
         {/* Floating Abstract Element */}
-        <motion.div 
+        <motion.div
           className="absolute right-10 top-1/3 flex h-48 w-48 items-center justify-center rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-2xl"
           animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
           transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
@@ -99,7 +99,7 @@ export default function Login() {
 
       {/* RIGHT PANEL: Form */}
       <div className="flex w-full items-center justify-center p-6 lg:w-1/2">
-        <motion.div 
+        <motion.div
           className="w-full max-w-md"
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -187,9 +187,9 @@ export default function Login() {
               <label htmlFor="remember" className="text-sm font-medium text-steel cursor-pointer">Remember me for 30 days</label>
             </div>
 
-            <button 
-              type="submit" 
-              disabled={isSubmitting} 
+            <button
+              type="submit"
+              disabled={isSubmitting}
               className="mt-4 flex w-full items-center justify-center gap-2 rounded-lg bg-ink px-4 py-3.5 text-sm font-semibold text-white transition-all hover:bg-ink/90 hover:shadow-lg hover:shadow-ink/20 disabled:cursor-not-allowed disabled:opacity-70"
             >
               {isSubmitting ? (
