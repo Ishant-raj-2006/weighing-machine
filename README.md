@@ -1,7 +1,4 @@
-![alt text](image.png)
-
-![alt text](image-2.png)
-Post 1
+![alt text](imagePost 1
 Reviewer = Archna_Kumar
 password = Archna_Kumari123
 
@@ -15,6 +12,9 @@ Password = Kajal123
 
 Post 4
 Testing Officer =  Tanya_kumari
-Password = Tanya_kumari123
+Password = Tanya_kumari123.png)
+
+![alt text](image-2.png)
+
 
 ![alt text](image-1.png)
