@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { toast } from 'sonner'
 import { Eye, EyeOff, Scale, Loader2 } from 'lucide-react'
+import loginBg from '../assets/Login.jpg'
 
 const loginSchema = z.object({
   role: z.string().min(1, 'Role is required'),
@@ -43,10 +44,20 @@ export default function Login() {
   return (
     <div className="flex min-h-screen bg-canvas font-body text-ink selection:bg-brass selection:text-white">
       {/* LEFT PANEL: Animated & Dynamic */}
-      <div className="relative hidden w-1/2 flex-col justify-between overflow-hidden bg-ink p-12 lg:flex">
-        {/* Background gradient effects */}
-        <div className="absolute -left-20 -top-20 h-96 w-96 rounded-full bg-brass opacity-20 blur-[100px]" />
-        <div className="absolute -bottom-32 -right-32 h-[500px] w-[500px] rounded-full bg-indigo-600 opacity-20 blur-[120px]" />
+      <div
+        className="relative hidden w-1/2 flex-col justify-between overflow-hidden p-12 lg:flex"
+        style={{
+          backgroundImage: `url(${loginBg})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
+        {/* Dark overlay for text readability */}
+        <div className="absolute inset-0 bg-ink/70" />
+        {/* Subtle colour accents on top of photo */}
+        <div className="absolute -left-20 -top-20 h-96 w-96 rounded-full bg-brass opacity-10 blur-[100px]" />
+        <div className="absolute -bottom-32 -right-32 h-[500px] w-[500px] rounded-full bg-indigo-600 opacity-10 blur-[120px]" />
 
         {/* Content */}
         <div className="relative z-10 flex items-center gap-3 text-brassLight">
